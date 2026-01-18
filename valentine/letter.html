@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heartfelt Letter 💌</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: 'Courier New', Courier, monospace;
+      background: linear-gradient(180deg, #ffd0e5 0%, #ffe8f2 36%, #ffffff 100%);
+      overflow: hidden;
+    }
+
+    .container {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end; /* start from bottom */
+      position: relative;
+    }
+
+    .letter {
+      background-color: #fff0f6;
+      border-radius: 25px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 500px;
+      font-size: 18px;
+      line-height: 1.8;
+      border: 3px solid white;
+      transform: translateY(100vh);
+      animation: scrollLetter 60s linear forwards;
+    }
+
+    @keyframes scrollLetter {
+      0% { transform: translateY(100vh); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-120vh); opacity: 1; }
+    }
+
+    p {
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 500px) {
+      .letter {
+        font-size: 16px;
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="letter">
+      <p>💌 Dear stinks,</p>
+      <p>Every time I see your smile my day becomes brighter. </p>
+      <p>You have a way of making even the MOSTTT simplest moments feel so much more special. We could be eating lunch together and I would still prefer that than anywhere else. When we share a laugh, look at each other, or just being with you, it makes my life way better.</p>
+      <p>Im always thinking about the little things you do, the way you listen, the kindness you show, the way you treat me, the effort you put in everything, how you hold my hands, everythinggg. These things matter more than you actually realize. </p>
+      <p>Sometimes I wonder how I got so lucky to know someone as amazing as you. Every memory we create together is something I could never forget. </p>
+      <p>Thank you for being patient, kind, and always always being thought. Thank you for sharing your thoughts to me and letting me in your life.</p>
+      <p>I hope this letter reminds you how much I am grateful for you.</p>
+      <p>I hope to bring everyday with you to be filled with joy and give everything you deserve.</p>
+      <p>Even if you ever feel less loved, remember that someone out here thinks about you constantly, smiles at the thought of you, and  loves you with their whole heart. </p>
+      <p>With all the love I can possibly give,</p>
+      <p> ME !! ❤️</p>
+    </div>
+  </div>
+</body>
+</html>
+

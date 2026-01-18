@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Balloon Pop 🎈</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+  font-family: 'Fredoka One', cursive;
+  background: linear-gradient(180deg, #ffd0e5 0%, #ffe8f2 36%, #ffffff 100%);
+  overflow:hidden;
+  position:relative;
+}
+
+/* Centered text container */
+.center-container {
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  text-align:center;
+  z-index:20; /* below balloons */
+  width:90%;
+}
+h1.big {
+  color:#ffe8f2;
+  font-weight:700;
+  font-size:10vw;
+  text-shadow:2px 3px 2px #d63384;
+  margin:0.3em 0;
+}
+
+/* Balloons */
+.balloon {
+  position:absolute;
+  bottom:-120px; /* start below screen */
+  width:15vw;
+  height:18vw;
+  max-width:90px;
+  max-height:110px;
+  background-color:#ff4d85;
+  border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+  cursor:pointer;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-size:6vw;
+  font-weight:bold;
+  transition:transform 0.3s;
+  z-index:30; /* balloons above text */
+  padding:20px;
+}
+.balloon:after {
+  content:'';
+  position:absolute;
+  bottom:-15%;
+  width:2px;
+  height:20%;
+  background:#ff4d85;
+}
+
+/* Rise then bob */
+.float {
+  animation: rise linear forwards;
+}
+@keyframes rise {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(var(--rise-end)); }
+}
+.bob {
+  animation: bobUpDown var(--bob-duration) ease-in-out infinite alternate;
+}
+@keyframes bobUpDown {
+  0% { transform: translateY(var(--rise-end)); }
+  50% { transform: translateY(calc(var(--rise-end) - var(--bob-height))); }
+  100% { transform: translateY(var(--rise-end)); }
+}
+
+/* Popup text */
+.popup-text {
+  position:absolute;
+  font-size:5vw;
+  color:#d63384;
+  font-weight:bold;
+  pointer-events:none;
+  white-space:nowrap;
+  animation: riseFade 2s forwards;
+  z-index:35;
+  text-shadow:1px 1px 2px #fff;
+}
+@keyframes riseFade {
+  0% { transform: translateY(0); opacity:1; }
+  100% { transform: translateY(-12vh); opacity:0; }
+}
+
+/* Responsive adjustments */
+@media (max-width:480px) {
+  h1.big{ font-size:15vw; }
+  .balloon{ width:18vw; height:21vw; font-size:7vw; padding:25px; }
+  .popup-text{ font-size:6vw; }
+}
+
+/* Desktop boost */
+@media (min-width:768px) {
+  .balloon { max-width:120px; max-height:140px; font-size:5rem; }
+  .popup-text { font-size:1rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="center-container">
+  <h1 class="big">13 BALLOONS</h1>
+  <h1 class="big">FOR YOU</h1>
+</div>
+
+<script>
+const compliments = [
+  "So grateful for you","You're so sweet","You make me smile",
+  "You’re so kind","YOU STINK ","You make my day better",
+  "I LOVE YOU ❤️","Stay the same forever pls","You deserve everything",
+  "YOU SO FINE ","You're my sunshine","My kitten ","Your hair's so soft"
+];
+
+const balloonCount = 13;
+
+// Function to create a balloon
+function createBalloon(i, delay) {
+  const balloon=document.createElement("div");
+  balloon.classList.add("balloon","float");
+
+  // Random horizontal
+  const maxX=window.innerWidth-90;
+  balloon.style.left=Math.random()*maxX+"px";
+
+  // Rise distance ABOVE the text
+  const riseEnd = - (window.innerHeight*0.55 + Math.random()*50);
+  balloon.style.setProperty('--rise-end', riseEnd+'px');
+
+  // Random bob distance and duration
+  balloon.style.setProperty('--bob-height', (10 + Math.random()*10) + 'px');
+  balloon.style.setProperty('--bob-duration', (2 + Math.random()*2) + 's');
+
+  // Rise duration
+  balloon.style.animationDuration = (2 + Math.random()*2)+'s';
+  balloon.dataset.index=i;
+  balloon.textContent="POP!";
+
+  // Start bob after rise
+  balloon.addEventListener('animationend',()=>{
+    balloon.classList.add('bob');
+  });
+
+  // Pop on click
+  balloon.addEventListener("click",()=>{
+    const rect=balloon.getBoundingClientRect();
+    const popup=document.createElement("div");
+    popup.classList.add("popup-text");
+    popup.style.left=rect.left+rect.width/2-50+"px";
+    popup.style.top=rect.top-20+"px";
+    popup.textContent=compliments[i];
+    document.body.appendChild(popup);
+    setTimeout(()=>popup.remove(),2000);
+
+    balloon.style.transition="transform 0.3s, opacity 0.3s";
+    balloon.style.transform="scale(0)";
+    balloon.style.opacity="0";
+    setTimeout(()=>balloon.remove(),300);
+  });
+
+  document.body.appendChild(balloon);
+}
+
+// Stagger balloons for easier popping
+for(let i=0;i<balloonCount;i++){
+  setTimeout(()=>createBalloon(i,i*500), i*500); // 0.5s delay between balloons
+}
+
+// Reposition balloons on resize
+window.addEventListener("resize",()=>{
+  document.querySelectorAll(".balloon").forEach(b=>{
+    const maxX=window.innerWidth - b.offsetWidth;
+    b.style.left=Math.random()*maxX+"px";
+  });
+});
+</script>
+</body>
+</html>
